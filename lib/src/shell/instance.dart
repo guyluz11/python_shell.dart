@@ -22,10 +22,16 @@ class ShellInstance {
     if (echo) print("Installing requirements...");
     String tempPythonRequireFile = path.join(tempDir, "requirements.txt");
     File(tempPythonRequireFile).writeAsStringSync(pythonRequires.join("\n"));
-    Process.runSync(
+    ProcessResult processResult = Process.runSync(
       pythonPath,
       ["-m", "pip", "install", "-r", tempPythonRequireFile],
     );
+
+    print('Process exist code ${processResult.exitCode}');
+
+    print('Stdout ${processResult.stdout}');
+    print('Stderr ${processResult.stderr}');
+
     File(tempPythonRequireFile).deleteSync();
     if (echo) print("Requirements installed.");
   }
