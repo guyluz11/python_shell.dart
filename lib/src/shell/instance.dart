@@ -27,7 +27,6 @@ class ShellInstance {
       ["-m", "pip", "install", "-r", tempPythonRequireFile],
     );
 
-    File(tempPythonRequireFile).deleteSync();
     if (echo) {
       if (processResult.exitCode == 0) {
         print(
@@ -38,6 +37,8 @@ class ShellInstance {
             'Stderr: ${processResult.stderr}');
       }
     }
+
+    File(tempPythonRequireFile).deleteSync();
   }
 
   Future<void> runFile(
