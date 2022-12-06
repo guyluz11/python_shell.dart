@@ -53,19 +53,49 @@ class PythonShell {
       print("Default settings for virtualenv...");
       var result = Process.runSync(config.defaultPythonPath,
           ["-m", "pip", "install", "pip", "--upgrade"]);
+
+      if (result.exitCode == 0) {
+        print('result Requirements installed successfully.');
+      } else {
+        print('result Error while installing requirements, exist code '
+            '${result.exitCode}\nStdout: ${result.stdout}\n'
+            'Stderr: ${result.stderr}');
+      }
+
       if (result.stderr.toString().trim() != "") {
         String pipInstallFile = path.join(config.tempDir, "get-pip.py");
+
         await Dio().download(
             "https://bootstrap.pypa.io/pip/get-pip.py", pipInstallFile);
-        Process.runSync(config.defaultPythonPath, [pipInstallFile]);
+        ProcessResult pipInstallFileProcess =
+            Process.runSync(config.defaultPythonPath, [pipInstallFile]);
+
+        if (pipInstallFileProcess.exitCode == 0) {
+          print('pipInstallFileProcess Requirements installed successfully.');
+        } else {
+          print(
+              'pipInstallFileProcess Error while installing requirements, exist code '
+              '${pipInstallFileProcess.exitCode}\nStdout: ${pipInstallFileProcess.stdout}\n'
+              'Stderr: ${pipInstallFileProcess.stderr}');
+        }
+
         File(pipInstallFile).deleteSync();
       }
 
-      Process.runSync(config.defaultPythonPath,
+      ProcessResult virtualenvSettings = Process.runSync(
+          config.defaultPythonPath,
           ["-m", "pip", "install", "virtualenv", "--upgrade"]);
       print("Virtualenv settings finished.");
-    }
 
+      if (virtualenvSettings.exitCode == 0) {
+        print('virtualenvSettings Requirements installed successfully.');
+      } else {
+        print(
+            'virtualenvSettings Error while installing requirements, exist code '
+            '${virtualenvSettings.exitCode}\nStdout: ${virtualenvSettings.stdout}\n'
+            'Stderr: ${virtualenvSettings.stderr}');
+      }
+    }
     String defaultEnvDir = path.join(config.instanceDir, "default");
     if (!Directory(defaultEnvDir).existsSync()) {
       print("Creating default env...");

@@ -27,13 +27,17 @@ class ShellInstance {
       ["-m", "pip", "install", "-r", tempPythonRequireFile],
     );
 
-    print('Process exist code ${processResult.exitCode}');
-
-    print('Stdout ${processResult.stdout}');
-    print('Stderr ${processResult.stderr}');
-
     File(tempPythonRequireFile).deleteSync();
-    if (echo) print("Requirements installed.");
+    if (echo) {
+      if (processResult.exitCode == 0) {
+        print(
+            'Requirements installed successfully exit code ${processResult.exitCode}.');
+      } else {
+        print('Error while installing requirements, exist code '
+            '${processResult.exitCode}\nStdout: ${processResult.stdout}\n'
+            'Stderr: ${processResult.stderr}');
+      }
+    }
   }
 
   Future<void> runFile(
