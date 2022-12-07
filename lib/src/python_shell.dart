@@ -82,6 +82,26 @@ class PythonShell {
       }
 
       print("Virtualenv settings finished.");
+
+      ProcessResult wheelUpgrade = Process.runSync(config.defaultPythonPath,
+          ["-m", "pip", "install", "wheel", "--upgrade"]);
+      if (wheelUpgrade.exitCode != 0) {
+        print('Error for wheelUpgrade, exist code ${wheelUpgrade.exitCode}\n'
+            'Stdout: ${wheelUpgrade.stdout}\nStderr: ${wheelUpgrade.stderr}');
+      }
+
+      print("Wheel settings finished.");
+
+      ProcessResult setuptoolsUpgrade = Process.runSync(
+          config.defaultPythonPath,
+          ["-m", "pip", "install", "setuptools", "--upgrade"]);
+      if (setuptoolsUpgrade.exitCode != 0) {
+        print(
+            'Error for setuptoolsUpgrade, exist code ${setuptoolsUpgrade.exitCode}\n'
+            'Stdout: ${setuptoolsUpgrade.stdout}\nStderr: ${setuptoolsUpgrade.stderr}');
+      }
+
+      print("Wheel settings finished.");
     }
 
     String defaultEnvDir = path.join(config.instanceDir, "default");
