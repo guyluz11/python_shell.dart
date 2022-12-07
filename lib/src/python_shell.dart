@@ -149,7 +149,7 @@ class PythonShell {
 class PythonShellConfig {
   PythonShellConfig({
     defaultPythonPath = "python3",
-    defaultPythonVersion = "3.8.10",
+    defaultPythonVersion = "3.10.6",
   }) {
     if ((Platform.isLinux || Platform.isMacOS)) {
       if (["python", "python2", "python3"].contains(defaultPythonPath)) {
