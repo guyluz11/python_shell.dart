@@ -8,11 +8,11 @@ String appDir = path.join(
 String tempDir = path.join(appDir, "temp");
 String instanceDir = path.join(appDir, "instances");
 
-String defaultPythonVersion = "3.11.1";
+String defaultPythonVersion = "3.10.6";
 String defaultPythonPath = "python3";
 
 String checkPythonVersion(String rawPythonVersion) {
-  String realPythonVersion = "3.11.1";
+  String realPythonVersion = "3.10.6";
 
   var versions = rawPythonVersion.split(".");
   if (versions.length == 3) {
